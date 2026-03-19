@@ -11,7 +11,7 @@ Los estudiantes deberán consumir esta API desde workflows de n8n utilizando el 
 # Base URL
 
 ```
-https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api
+https://api-medicina-automatizacion-ia-avanzada-auth-production.up.railway.app/api
 ```
 
 ---
