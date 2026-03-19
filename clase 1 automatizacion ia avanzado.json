@@ -1,0 +1,694 @@
+{
+  "name": "clase 1 automatizacion ia avanzado",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "patient-created",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -384,
+        -128
+      ],
+      "id": "732fa48e-e35d-476d-bac5-270bf3f52abc",
+      "name": "Webhook",
+      "webhookId": "35a97207-c75c-4f44-8aef-f835290e8440"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api/patients",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "age",
+              "value": "={{$json.body.age}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json.body.email}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -80,
+        -128
+      ],
+      "id": "856cc3bb-4eba-4497-bd29-8764afa1abfa",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "path": "patient",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -400,
+        192
+      ],
+      "id": "313e3bc3-040e-4775-8bad-72d9e317d222",
+      "name": "Webhook1",
+      "webhookId": "a78a6993-0a1e-487c-81f3-e34a55daefca"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"status\":\"success\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        480,
+        -256
+      ],
+      "id": "21800c05-decd-45df-b09f-dc38b425930f",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"error\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        352,
+        -96
+      ],
+      "id": "42fb3f2c-b804-4829-8d55-dc3e9051af0c",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "url": "https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api/patients",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        96,
+        176
+      ],
+      "id": "d0bedb19-65c4-4603-b38c-a7dd2ac44ce6",
+      "name": "HTTP Request1",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $('HTTP Request1').item.json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1088,
+        -32
+      ],
+      "id": "e57fffb2-6440-4a4e-b529-2e5c6d3a592c",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"error\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        816,
+        336
+      ],
+      "id": "365bcc52-cca8-4709-a604-c2f3a500751f",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "DELETE",
+        "path": "=patient-deleted/:id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        560
+      ],
+      "id": "c13ba1b3-633e-443d-9fb1-11639c03095d",
+      "name": "Webhook2",
+      "webhookId": "527c2029-a29b-4ddd-b5a2-53ea864d2168"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api/patients/{{ $json.params.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -160,
+        560
+      ],
+      "id": "b75cdcef-0db5-400b-96c0-aae069ff3de0",
+      "name": "HTTP Request2",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        240,
+        544
+      ],
+      "id": "446e92f8-055c-40e2-8121-54c0c9f7d4ae",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"error\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        96,
+        672
+      ],
+      "id": "7641edd7-25f1-4a16-b9ac-53ac95062f07",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "httpMethod": "PUT",
+        "path": "=patient-updated/:id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -352,
+        880
+      ],
+      "id": "ec005d28-53a2-422d-9e56-b8874e88db8c",
+      "name": "Webhook3",
+      "webhookId": "527c2029-a29b-4ddd-b5a2-53ea864d2168"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api/patients/{{ $json.params.id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.body.name }}\",\n  \"age\":{{ $json.body.age }},\n  \"email\":\"{{ $json.body.email }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -128,
+        896
+      ],
+      "id": "bacbaab6-2a80-4409-8515-0dc7862638c2",
+      "name": "HTTP Request3",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        160,
+        864
+      ],
+      "id": "0b90c073-69e1-4ac2-beac-f7642730eb4d",
+      "name": "Respond to Webhook6"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"error\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        160,
+        1056
+      ],
+      "id": "7a2ecd01-9fdc-4746-8862-29be5eac3fa1",
+      "name": "Respond to Webhook7"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"data\": {{$json.data}} ,\n  \"responseTime\": {{ Date.now() - $('Edit Fields1').item.json.startTime }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        112
+      ],
+      "id": "6ae20acd-9851-4651-9eb0-ee07ce44b83f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "936fa702-57d2-42f5-8174-dc4565837b1c",
+              "name": "=startTime",
+              "value": "={{ Date.now() }}",
+              "type": "string"
+            },
+            {
+              "id": "8bc83e51-b016-43a9-9f61-63c1359acda4",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        176
+      ],
+      "id": "3fee0924-b2d2-470c-9c94-7bd489b1e2dd",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f4387be3-55f6-45b7-93cf-9cdeb2098c78",
+              "leftValue": "={{ $json.responseTime }}",
+              "rightValue": 1500,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        96
+      ],
+      "id": "2b67937d-179c-4d76-ac1e-5ad26b06d3ea",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "maxi_rosanda@hotmail.com",
+        "subject": "Error en api hospital",
+        "message": "=Nivel: WARNING\ntiempo de respuesta api {{ $json.responseTime }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        -32
+      ],
+      "id": "e76aa1fa-bd97-44e7-8631-eb2e985bdeae",
+      "name": "Send a message",
+      "webhookId": "ddb09c4e-c52c-451b-80e6-6317dd77ba0a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FZpHmjbomjqMyrvO",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $('HTTP Request1').item.json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1152,
+        176
+      ],
+      "id": "624f99ac-7bb2-4a0a-bd4f-9e665f10ee84",
+      "name": "Respond to Webhook9"
+    },
+    {
+      "parameters": {
+        "sendTo": "maxi_rosanda@hotmail.com",
+        "subject": "Error en api hospital",
+        "message": "=Nivel: CRITICAL\ncausa: no se pudo acceder a la api\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        320
+      ],
+      "id": "023d0d75-fd73-4e15-a983-930f35b53b93",
+      "name": "Send a message1",
+      "webhookId": "ddb09c4e-c52c-451b-80e6-6317dd77ba0a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FZpHmjbomjqMyrvO",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "15XP8wkk5jHFMjO206VwUUDs0rjY-rg553RqzE8KmAc4",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "registro-consultas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15XP8wkk5jHFMjO206VwUUDs0rjY-rg553RqzE8KmAc4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha ingreso": "={{$now}}",
+            "Nivel": "INFO"
+          },
+          "matchingColumns": [
+            "it"
+          ],
+          "schema": [
+            {
+              "id": "Fecha ingreso",
+              "displayName": "Fecha ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nivel",
+              "displayName": "Nivel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        880,
+        144
+      ],
+      "id": "fc48397d-61d3-4454-8e99-3945f8da69f2",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qcXdgdmTTSVL6P5W",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook3": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook9": {
+      "main": [
+        []
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "13027d4b-3074-42bf-84d1-5e657f927c5c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1ffa924423b29c42b2c06554d71079e837dac9cfd2dcab11d78f5dd526527fc2"
+  },
+  "id": "TKfSYtW0pkFlfciR",
+  "tags": []
+}
