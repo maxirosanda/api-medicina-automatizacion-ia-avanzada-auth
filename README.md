@@ -1,10 +1,10 @@
 # API de Pacientes — Documentación
 
-Esta API permite **gestionar pacientes** mediante operaciones básicas de una **API REST**.
+Esta API permite gestionar pacientes mediante operaciones básicas de una API REST, incorporando autenticación con JWT (Bearer Token).
 
-Será utilizada en los ejercicios del curso de **Automatización con IA utilizando n8n**.
+Será utilizada en los ejercicios del curso de Automatización con IA utilizando n8n.
 
-Los estudiantes deberán consumir esta API desde **workflows de n8n** utilizando el nodo **HTTP Request**.
+Los estudiantes deberán consumir esta API desde workflows de n8n utilizando el nodo HTTP Request, incluyendo autenticación.
 
 ---
 
@@ -15,6 +15,88 @@ https://api-medicina-automatizacion-ia-avanzada-production.up.railway.app/api
 ```
 
 ---
+# 🔐 Autenticación
+
+La API utiliza **JWT (JSON Web Token)**.
+
+Para acceder a los endpoints protegidos, primero debes:
+
+1. Registrarte  
+2. Iniciar sesión  
+3. Obtener un token  
+4. Enviar el token en cada request  
+
+---
+
+## 🧑‍💻 Registro de usuario (Register)
+
+Permite crear un nuevo usuario en el sistema.
+
+### Endpoint
+
+POST /api/auth/register
+
+### Body
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+
+### Respuesta exitosa
+
+{
+  "message": "Usuario creado"
+}
+
+### Posibles errores
+
+Usuario ya existe:
+
+{
+  "message": "Usuario ya existe"
+}
+
+---
+
+## 🔑 Obtener Token (Login)
+
+Permite autenticarse y obtener un token JWT.
+
+### Endpoint
+
+POST /api/auth/login
+
+### Body
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+
+### Respuesta
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+
+}
+
+### Posibles errores
+
+Credenciales inválidas:
+
+{
+  "message": "Credenciales inválidas"
+}
+
+---
+
+## 🔑 Uso del Token
+
+Debes incluir el token en el header de cada request:
+
+Authorization: Bearer TU_TOKEN
+
 
 # Modelo de Paciente
 

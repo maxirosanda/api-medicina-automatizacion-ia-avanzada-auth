@@ -13,10 +13,10 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/patients", protect, createPatient);
-router.get("/patients", protect, getPatients);
-router.get("/patients/:id", protect, getPatientById);
-router.put("/patients/:id", protect, updatePatient);
-router.delete("/patients/:id", protect, deletePatient);
+router.post("/", protect, createPatient);
+router.get("/", protect, getPatients);
+router.get("/:id", protect, getPatientById);
+router.put("/:id", protect, updatePatient);
+router.delete("/:id", protect, deletePatient);
 
 export default router;

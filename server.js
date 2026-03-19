@@ -14,7 +14,7 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api", authRoutes);
+app.use("/api/patients", patientRoutes);
 app.use("/api/auth", authRoutes);
 
 /**
